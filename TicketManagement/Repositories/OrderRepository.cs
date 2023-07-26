@@ -9,8 +9,7 @@ namespace TicketManagement.Repositories
 
         public OrderRepository()
         {
-            _dbContext = new PracticaContext();
-            
+            _dbContext = new PracticaContext();            
         }
         public IEnumerable<Order> GetAll()
         {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -13,24 +14,18 @@ namespace TicketManagement.Controllers
     public class EventController : ControllerBase
     {
         private readonly IEventRepository _eventRepository;
+        private readonly IMapper _mapper;
 
-        public EventController(IEventRepository eventRepository)
+        public EventController(IEventRepository eventRepository, IMapper mapper)
         {
             _eventRepository = eventRepository;   
+            _mapper = mapper;
         }
         [HttpGet]
        public ActionResult<List<EventDTO>> GetAll()
         {
             var events = _eventRepository.GetAll();
-
-            var dtoEvents = events.Select(e => new EventDTO()
-            {
-                EventId = e.EventId,
-                EventName = e.EventName,
-                EventDescription = e.EventDescription,
-                EventType = e.EventType?.EventTypeName ?? string.Empty,
-                Venue = e.Venue?.Location ?? string.Empty,
-            });
+            var dtoEvents = _mapper.Map<List<EventDTO>>(events);
 
             return Ok(dtoEvents);
         }
@@ -44,15 +39,9 @@ namespace TicketManagement.Controllers
             {
                 return NotFound();
             }
-            var eventDTO = new EventDTO
-            {
-                EventId = @event.EventId,
-                EventName = @event.EventName,
-                EventDescription = @event.EventDescription,
-                EventType = @event.EventType?.EventTypeName ?? string.Empty, 
-                Venue = @event.Venue?.Location ?? string.Empty
-            };
-            return Ok(eventDTO);
+
+            var dtoEvent = _mapper.Map<EventDTO>(@event); 
+            return Ok(dtoEvent);
         }
     }
     

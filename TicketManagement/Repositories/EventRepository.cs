@@ -1,4 +1,5 @@
-﻿using TicketManagement.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using TicketManagement.Models;
 
 namespace TicketManagement.Repositories
 {
@@ -22,13 +23,17 @@ namespace TicketManagement.Repositories
 
         public IEnumerable<Event> GetAll()
         {
-            var events = _dbContext.Events;
+            var events = _dbContext.Events.Include(e => e.EventType)
+                                          .Include(e => e.Venue);
             return events;
         }
 
         public Event GetById(int id)
         {
-            var @event = _dbContext.Events.Where(e => e.EventId == id).FirstOrDefault();
+            var @event = _dbContext.Events.Include(e => e.EventType)
+                                          .Include(e => e.Venue)
+                                          .Where(e => e.EventId == id)
+                                          .FirstOrDefault();
             return @event;
         }
 
