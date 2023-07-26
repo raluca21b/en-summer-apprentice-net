@@ -11,6 +11,13 @@ namespace TicketManagement.Repositories
         {
             _dbContext = new PracticaContext();            
         }
+
+        public void Delete(Order order)
+        {
+            _dbContext.Remove(order);   
+            _dbContext.SaveChanges();
+        }
+
         public IEnumerable<Order> GetAll()
         {
             var orders = _dbContext.Orders.Include(o => o.TicketCategory)
@@ -18,14 +25,18 @@ namespace TicketManagement.Repositories
             return orders;
         }
 
-        public Order GetById(int id)
+        public async Task<Order> GetById(int id)
         {
-            var order = _dbContext.Orders.Include(o => o.TicketCategory)
+            var order = await _dbContext.Orders.Include(o => o.TicketCategory)
                                          .ThenInclude(tc => tc.Event)
-                                         .FirstOrDefault(o => o.OrderId == id);
+                                         .FirstOrDefaultAsync(o => o.OrderId == id);
 
             return order;
         }
 
+        public void Update(Order order)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

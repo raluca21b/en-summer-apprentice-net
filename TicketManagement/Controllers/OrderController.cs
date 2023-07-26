@@ -30,9 +30,9 @@ namespace TicketManagement.Controllers
         }
 
         [HttpGet]
-        public ActionResult<OrderDTO> GetById(int id)
+        public async Task<ActionResult<OrderDTO>> GetById(int id)
         {
-            var order = _orderRepository.GetById(id);
+            var order = await _orderRepository.GetById(id);
 
             if(order == null)
             {
@@ -41,6 +41,21 @@ namespace TicketManagement.Controllers
 
             var orderDTO = _mapper.Map<OrderDTO>(order);
             return Ok(orderDTO);
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var orderEntity = await _orderRepository.GetById(id);
+
+            if(orderEntity == null)
+            {
+                return NotFound();
+            }
+
+            _orderRepository.Delete(orderEntity);
+            return NoContent();
+
         }
     }
 }
