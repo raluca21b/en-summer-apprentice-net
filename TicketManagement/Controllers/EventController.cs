@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel.DataAnnotations;
 using TicketManagement.Models.DTO;
 using TicketManagement.Repositories;
@@ -31,9 +32,9 @@ namespace TicketManagement.Controllers
         }
 
         [HttpGet]
-        public ActionResult<EventDTO> GetById(int id)
+        public async Task<ActionResult<EventDTO>> GetById(int id)
         {
-            var @event = _eventRepository.GetById(id);
+            var @event = await _eventRepository.GetById(id);
 
             if (@event == null)
             {
@@ -43,6 +44,43 @@ namespace TicketManagement.Controllers
             var dtoEvent = _mapper.Map<EventDTO>(@event); 
             return Ok(dtoEvent);
         }
+
+        [HttpPatch]
+        public async Task<ActionResult<EventPatchDTO>> Patch(EventPatchDTO eventPatchDTO)
+        {
+            var eventEntity = await _eventRepository.GetById(eventPatchDTO.EventId);
+
+            if (eventEntity == null)
+            {
+                return NotFound();
+            }
+
+            if (!eventPatchDTO.EventName.IsNullOrEmpty())
+                eventEntity.EventName = eventPatchDTO.EventName;
+
+            if (!eventPatchDTO.EventDescription.IsNullOrEmpty())
+                eventEntity.EventDescription = eventPatchDTO.EventDescription;
+            
+            _eventRepository.Update(eventEntity);
+            return NoContent();
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var eventEntity = await _eventRepository.GetById(id);
+
+            if (eventEntity == null)
+            {
+                return NotFound();
+            }
+
+            _eventRepository.Delete(eventEntity);
+            return NoContent();
+        }
+    
+    
+    
     }
     
    

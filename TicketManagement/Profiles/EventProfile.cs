@@ -12,6 +12,8 @@ namespace TicketManagement.Profiles
                .ForMember(dest => dest.EventType, opt => opt.MapFrom(src => src.EventType.EventTypeName))
                .ForMember(dest => dest.Venue, opt => opt.MapFrom(src => src.Venue.Location))
                .ReverseMap();
+
+            CreateMap<Event, EventPatchDTO>().ReverseMap();
         }
     }
 }
