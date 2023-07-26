@@ -36,7 +36,8 @@ namespace TicketManagement.Repositories
 
         public void Update(Order order)
         {
-            throw new NotImplementedException();
+            _dbContext.Entry(order).State = EntityState.Modified;
+            _dbContext.SaveChanges();
         }
     }
 }
