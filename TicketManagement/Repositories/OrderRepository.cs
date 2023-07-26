@@ -13,14 +13,19 @@ namespace TicketManagement.Repositories
         }
         public IEnumerable<Order> GetAll()
         {
-            var orders = _dbContext.Orders.Include(o => o.TicketCategory);
+            var orders = _dbContext.Orders.Include(o => o.TicketCategory)
+                                          .ThenInclude(tc => tc.Event);
             return orders;
         }
 
         public Order GetById(int id)
         {
-            var order = _dbContext.Orders.Include(o => o.TicketCategory).Where(o => o.OrderId == id).FirstOrDefault();
+            var order = _dbContext.Orders.Include(o => o.TicketCategory)
+                                         .ThenInclude(tc => tc.Event)
+                                         .FirstOrDefault(o => o.OrderId == id);
+
             return order;
         }
+
     }
 }
