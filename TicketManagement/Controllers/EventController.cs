@@ -23,9 +23,9 @@ namespace TicketManagement.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-       public ActionResult<List<EventDTO>> GetAll()
+       public async Task<ActionResult<List<EventDTO>>> GetAll()
         {
-            var events = _eventRepository.GetAll();
+            var events = await _eventRepository.GetAll();
             var dtoEvents = _mapper.Map<List<EventDTO>>(events);
 
             return Ok(dtoEvents);

@@ -22,10 +22,10 @@ namespace TicketManagement.Repositories
             _dbContext.SaveChanges();
         }
 
-        public IEnumerable<Event> GetAll()
+        public async Task<IEnumerable<Event>> GetAll()
         {
-            var events = _dbContext.Events.Include(e => e.EventType)
-                                          .Include(e => e.Venue);
+            var events = await _dbContext.Events.Include(e => e.EventType)
+                                          .Include(e => e.Venue).ToListAsync();
             return events;
         }
 

@@ -18,10 +18,10 @@ namespace TicketManagement.Repositories
             _dbContext.SaveChanges();
         }
 
-        public IEnumerable<Order> GetAll()
+        public async Task<IEnumerable<Order>> GetAll()
         {
-            var orders = _dbContext.Orders.Include(o => o.TicketCategory)
-                                          .ThenInclude(tc => tc.Event);
+            var orders = await _dbContext.Orders.Include(o => o.TicketCategory)
+                                          .ThenInclude(tc => tc.Event).ToListAsync();
             return orders;
         }
 

@@ -24,9 +24,9 @@ namespace TicketManagement.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<OrderDTO>> GetAll()
+        public async Task<ActionResult<List<OrderDTO>>> GetAll()
         {
-            var orders = _orderRepository.GetAll().ToList();
+            var orders = await _orderRepository.GetAll();
             var dtoOrders = _mapper.Map<List<OrderDTO>>(orders);
 
             return Ok(dtoOrders);
