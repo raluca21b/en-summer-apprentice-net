@@ -12,15 +12,11 @@ namespace TicketManagement.Repositories
         {
             _dbContext = new PracticaContext();
         }
-        public int Add(Event @event)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void Delete(Event @event)
+        public async Task Delete(Event @event)
         {
             _dbContext.Remove(@event);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Event>> GetAll()
@@ -37,7 +33,7 @@ namespace TicketManagement.Repositories
                                                 .Where(e => e.EventId == id)
                                                 .FirstOrDefaultAsync();
 
-            if (@event == null) 
+            if (@event == null)
             {
                 throw new EntityNotFoundException(id, nameof(Event));
             }
@@ -45,10 +41,10 @@ namespace TicketManagement.Repositories
             return @event;
         }
 
-        public void Update(Event @event)
+        public async Task Update(Event @event)
         {
             _dbContext.Entry(@event).State = EntityState.Modified;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
