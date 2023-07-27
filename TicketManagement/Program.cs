@@ -1,7 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using NLog.Web;
 using TicketManagement.MiddleWare;
-using TicketManagement.Models;
 using TicketManagement.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,9 +16,9 @@ builder.Host.UseNLog();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<IOrderRepository,OrderRepository>();
-builder.Services.AddTransient<IEventRepository,EventRepository>();
-builder.Services.AddTransient<ITicketCategoryRepository,TicketCategoryRepository>();
+builder.Services.AddTransient<IOrderRepository, OrderRepository>();
+builder.Services.AddTransient<IEventRepository, EventRepository>();
+builder.Services.AddTransient<ITicketCategoryRepository, TicketCategoryRepository>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 

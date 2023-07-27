@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using TicketManagement.Repositories;
-using TicketManagement.Models.DTO;
-using AutoMapper;
 using TicketManagement.Models;
+using TicketManagement.Models.DTO;
+using TicketManagement.Repositories;
 
 namespace TicketManagement.Controllers
 
@@ -69,7 +68,7 @@ namespace TicketManagement.Controllers
 
             orderEntity.TotalPrice = orderEntity.NumberOfTickets * orderEntity.TicketCategory.Price;
             
-            _orderRepository.Update(orderEntity);
+            await _orderRepository.Update(orderEntity);
 
             return NoContent();
         }
@@ -79,7 +78,7 @@ namespace TicketManagement.Controllers
         {
             var orderEntity = await _orderRepository.GetById(id);
 
-            _orderRepository.Delete(orderEntity);
+            await _orderRepository.Delete(orderEntity);
             return NoContent();
 
         }

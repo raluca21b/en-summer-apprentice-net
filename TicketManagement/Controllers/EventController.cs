@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using System.ComponentModel.DataAnnotations;
 using TicketManagement.Models.DTO;
 using TicketManagement.Repositories;
 
@@ -51,7 +47,7 @@ namespace TicketManagement.Controllers
             if (!eventPatchDTO.EventDescription.IsNullOrEmpty())
                 eventEntity.EventDescription = eventPatchDTO.EventDescription;
             
-            _eventRepository.Update(eventEntity);
+            await _eventRepository.Update(eventEntity);
             return NoContent();
         }
 
@@ -60,7 +56,7 @@ namespace TicketManagement.Controllers
         {
             var eventEntity = await _eventRepository.GetById(id);
 
-            _eventRepository.Delete(eventEntity);
+            await _eventRepository.Delete(eventEntity);
 
             return NoContent();
         }

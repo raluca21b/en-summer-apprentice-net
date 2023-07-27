@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using TicketManagement.Models.DTO;
 using TicketManagement.Models;
+using TicketManagement.Models.DTO;
 
 namespace TicketManagement.Profiles
 {
