@@ -35,13 +35,8 @@ namespace TicketManagement.Controllers
         public async Task<ActionResult<EventDTO>> GetById(int id)
         {
             var @event = await _eventRepository.GetById(id);
-
-            if (@event == null)
-            {
-                return NotFound();
-            }
-
             var dtoEvent = _mapper.Map<EventDTO>(@event); 
+
             return Ok(dtoEvent);
         }
 
@@ -49,11 +44,6 @@ namespace TicketManagement.Controllers
         public async Task<ActionResult<EventPatchDTO>> Patch(EventPatchDTO eventPatchDTO)
         {
             var eventEntity = await _eventRepository.GetById(eventPatchDTO.EventId);
-
-            if (eventEntity == null)
-            {
-                return NotFound();
-            }
 
             if (!eventPatchDTO.EventName.IsNullOrEmpty())
                 eventEntity.EventName = eventPatchDTO.EventName;
@@ -70,12 +60,8 @@ namespace TicketManagement.Controllers
         {
             var eventEntity = await _eventRepository.GetById(id);
 
-            if (eventEntity == null)
-            {
-                return NotFound();
-            }
-
             _eventRepository.Delete(eventEntity);
+
             return NoContent();
         }
     

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TicketManagement.Exceptions;
 using TicketManagement.Models;
 
 namespace TicketManagement.Repositories
@@ -35,6 +36,12 @@ namespace TicketManagement.Repositories
                                                 .Include(e => e.Venue)
                                                 .Where(e => e.EventId == id)
                                                 .FirstOrDefaultAsync();
+
+            if (@event == null) 
+            {
+                throw new EntityNotFoundException(id, nameof(Event));
+            }
+
             return @event;
         }
 

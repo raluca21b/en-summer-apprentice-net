@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using TicketManagement.Exceptions;
 using TicketManagement.Models;
 
 namespace TicketManagement.Repositories
@@ -30,6 +32,12 @@ namespace TicketManagement.Repositories
             var order = await _dbContext.Orders.Include(o => o.TicketCategory)
                                          .ThenInclude(tc => tc.Event)
                                          .FirstOrDefaultAsync(o => o.OrderId == id);
+
+
+            if (order == null)
+            {
+                throw new EntityNotFoundException(id, nameof(Order));
+            }
 
             return order;
         }

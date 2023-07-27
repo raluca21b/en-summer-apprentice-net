@@ -1,4 +1,5 @@
 using NLog.Web;
+using TicketManagement.MiddleWare;
 using TicketManagement.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +32,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseAuthorization();
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TicketManagement.Exceptions;
 using TicketManagement.Models;
 
 namespace TicketManagement.Repositories
@@ -15,7 +16,12 @@ namespace TicketManagement.Repositories
             var ticketCategory = _dbContext.TicketCategories.Include(tc => tc.Event)
                                                             .FirstOrDefault(tc => tc.EventId == eventId &&
                                                                             tc.Description == description);
-            Console.WriteLine(ticketCategory);
+            if (ticketCategory == null)
+            {
+                throw new EntityNotFoundException("TicketCategory not found with eventId " + eventId.ToString() 
+                                                                                           + " and description "
+                                                                                           + description);
+            }
             return ticketCategory;
         }
     }

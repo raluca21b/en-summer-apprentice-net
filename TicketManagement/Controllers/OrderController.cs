@@ -36,13 +36,8 @@ namespace TicketManagement.Controllers
         public async Task<ActionResult<OrderDTO>> GetById(int id)
         {
             var order = await _orderRepository.GetById(id);
-
-            if(order == null)
-            {
-                return NotFound();
-            }
-
             var orderDTO = _mapper.Map<OrderDTO>(order);
+
             return Ok(orderDTO);
         }
 
@@ -50,11 +45,6 @@ namespace TicketManagement.Controllers
         public async Task<ActionResult<OrderPatchDTO>> Patch(OrderPatchDTO orderPatchDTO)
         {
             var orderEntity = await _orderRepository.GetById(orderPatchDTO.OrderID);
-
-            if (orderEntity == null)
-            {
-                return NotFound();
-            }
 
             orderEntity.OrderedAt = DateTime.Now;
             
@@ -64,7 +54,7 @@ namespace TicketManagement.Controllers
             }
             else
             {
-                return BadRequest("Number of Ticket cannot be negative or null!");
+                throw new ArgumentException("Number of Tickets cannot be negative or null!");
             }
 
             if (orderPatchDTO.EventID != 0 && orderPatchDTO.TicketDescription != null 
@@ -88,11 +78,6 @@ namespace TicketManagement.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             var orderEntity = await _orderRepository.GetById(id);
-
-            if(orderEntity == null)
-            {
-                return NotFound();
-            }
 
             _orderRepository.Delete(orderEntity);
             return NoContent();
