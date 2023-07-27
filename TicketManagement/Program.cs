@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using NLog.Web;
 using TicketManagement.MiddleWare;
+using TicketManagement.Models;
 using TicketManagement.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
