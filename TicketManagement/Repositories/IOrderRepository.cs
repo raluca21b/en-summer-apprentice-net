@@ -6,7 +6,7 @@ namespace TicketManagement.Repositories
     {
         Task<IEnumerable<Order>> GetAll();
         Task<Order> GetById(int id);
-        Task Update(Order order);
-        Task Delete(Order order);
+        void Update(Order order);
+        void Delete(Order order);
     }
 }

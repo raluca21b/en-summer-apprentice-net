@@ -13,10 +13,10 @@ namespace TicketManagement.Repositories
             _dbContext = new PracticaContext();
         }
 
-        public async Task Delete(Event @event)
+        public void Delete(Event @event)
         {
             _dbContext.Remove(@event);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Event>> GetAll()
@@ -41,10 +41,10 @@ namespace TicketManagement.Repositories
             return @event;
         }
 
-        public async Task Update(Event @event)
+        public void Update(Event @event)
         {
             _dbContext.Entry(@event).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChangesAsync();
         }
     }
 }

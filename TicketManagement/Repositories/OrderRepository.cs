@@ -13,10 +13,10 @@ namespace TicketManagement.Repositories
             _dbContext = new PracticaContext();
         }
 
-        public async Task Delete(Order order)
+        public void Delete(Order order)
         {
             _dbContext.Remove(order);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Order>> GetAll()
@@ -41,10 +41,10 @@ namespace TicketManagement.Repositories
             return order;
         }
 
-        public async Task Update(Order order)
+        public void Update(Order order)
         {
             _dbContext.Entry(order).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChangesAsync();
         }
     }
 }
