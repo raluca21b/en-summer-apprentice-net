@@ -16,7 +16,7 @@ namespace TicketManagement.Profiles
 
         private int GetEventIdOrDefault(Order source)
         {
-            if (source.TicketCategory != null && source.TicketCategory.Event != null)
+            if (source.TicketCategory?.Event != null)
             {
                 return source.TicketCategory.Event.EventId;
             }

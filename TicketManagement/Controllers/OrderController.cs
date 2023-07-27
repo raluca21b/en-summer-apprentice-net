@@ -68,7 +68,7 @@ namespace TicketManagement.Controllers
 
             orderEntity.TotalPrice = orderEntity.NumberOfTickets * orderEntity.TicketCategory.Price;
             
-            _orderRepository.Update(orderEntity);
+            await _orderRepository.Update(orderEntity);
 
             return NoContent();
         }
@@ -78,7 +78,7 @@ namespace TicketManagement.Controllers
         {
             var orderEntity = await _orderRepository.GetById(id);
 
-            _orderRepository.Delete(orderEntity);
+            await _orderRepository.Delete(orderEntity);
             return NoContent();
 
         }

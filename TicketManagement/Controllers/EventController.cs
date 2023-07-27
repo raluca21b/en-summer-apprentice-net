@@ -47,7 +47,7 @@ namespace TicketManagement.Controllers
             if (!eventPatchDTO.EventDescription.IsNullOrEmpty())
                 eventEntity.EventDescription = eventPatchDTO.EventDescription;
             
-            _eventRepository.Update(eventEntity);
+            await _eventRepository.Update(eventEntity);
             return NoContent();
         }
 
@@ -56,8 +56,7 @@ namespace TicketManagement.Controllers
         {
             var eventEntity = await _eventRepository.GetById(id);
 
-            _eventRepository.Delete(eventEntity);
-
+            await _eventRepository.Delete(eventEntity);
             return NoContent();
         }
     
