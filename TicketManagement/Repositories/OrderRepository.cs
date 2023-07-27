@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using TicketManagement.Exceptions;
 using TicketManagement.Models;
 
@@ -11,12 +10,12 @@ namespace TicketManagement.Repositories
 
         public OrderRepository()
         {
-            _dbContext = new PracticaContext();            
+            _dbContext = new PracticaContext();
         }
 
         public async Task Delete(Order order)
         {
-            _dbContext.Remove(order);   
+            _dbContext.Remove(order);
             await _dbContext.SaveChangesAsync();
         }
 

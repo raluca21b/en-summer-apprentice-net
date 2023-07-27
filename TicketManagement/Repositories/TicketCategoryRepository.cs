@@ -9,7 +9,7 @@ namespace TicketManagement.Repositories
         private readonly PracticaContext _dbContext;
         public TicketCategoryRepository()
         {
-            _dbContext = new PracticaContext();   
+            _dbContext = new PracticaContext();
         }
         public TicketCategory GetTicketCategoryByEventIdAndDescription(int eventId, string description)
         {
@@ -18,7 +18,7 @@ namespace TicketManagement.Repositories
                                                                             tc.Description == description);
             if (ticketCategory == null)
             {
-                throw new EntityNotFoundException("TicketCategory not found with eventId " + eventId.ToString() 
+                throw new EntityNotFoundException("TicketCategory not found with eventId " + eventId.ToString()
                                                                                            + " and description "
                                                                                            + description);
             }
