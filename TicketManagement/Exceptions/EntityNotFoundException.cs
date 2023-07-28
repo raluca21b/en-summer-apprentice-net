@@ -9,5 +9,7 @@
         public EntityNotFoundException(string merrorMessage, Exception innerException) : base(merrorMessage, innerException) { }
 
         public EntityNotFoundException(long entityId, string entityName) : base(FormattableString.Invariant($"'{entityName}' with id '{entityId}' was not found.")) { }
+
+
     }
 }

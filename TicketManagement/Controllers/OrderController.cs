@@ -59,9 +59,10 @@ namespace TicketManagement.Controllers
             if (orderPatchDTO.EventID != 0 && orderPatchDTO.TicketDescription != null 
                                            && orderPatchDTO.TicketDescription != orderEntity.TicketCategory.Description)
             {
-                TicketCategory ticketCategory = _ticketCategoryRepository
+                TicketCategory ticketCategory = await _ticketCategoryRepository
                                      .GetTicketCategoryByEventIdAndDescription
                                      (orderPatchDTO.EventID, orderPatchDTO.TicketDescription);
+
                 ticketCategory.Event = orderEntity.TicketCategory.Event;
                 orderEntity.TicketCategory = ticketCategory;
             }
