@@ -11,7 +11,7 @@ namespace TicketManagement.Repositories
         {
             _dbContext = new PracticaContext();
         }
-        public TicketCategory GetTicketCategoryByEventIdAndDescription(int eventId, string description)
+        public async Task<TicketCategory> GetTicketCategoryByEventIdAndDescription(int eventId, string description)
         {
             var ticketCategory = _dbContext.TicketCategories.Include(tc => tc.Event)
                                                             .FirstOrDefault(tc => tc.EventId == eventId &&
